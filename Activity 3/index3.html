@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+  margin: 0;
+  min-width: 250px;
+  font-family: 'Poppins', sans-serif;
+  background: #000;
+  color: #fff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+ul li {
+  cursor: pointer;
+  position: relative;
+  padding: 12px 8px 12px 40px;
+  list-style-type: none;
+  background: rgba(255, 255, 255, 0.1);
+  font-size: 18px;
+  transition: 0.3s;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+  user-select: none;
+  transition: all 0.3s ease;
+}
+
+ul li:nth-child(odd) {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+ul li:hover {
+  background: #555;
+  color: #fff;
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
+}
+
+ul li.checked {
+  background: #777;
+  color: #fff;
+  text-decoration: line-through;
+}
+
+ul li.checked::before {
+  content: '';
+  position: absolute;
+  border-color: #fff;
+  border-style: solid;
+  border-width: 0 2px 2px 0;
+  top: 10px;
+  left: 16px;
+  transform: rotate(45deg);
+  height: 15px;
+  width: 7px;
+}
+
+.close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 12px 16px 12px 16px;
+  transition: 0.3s;
+}
+
+.close:hover {
+  background-color: #ff4d4d;
+  color: white;
+}
+
+.header {
+  background-color: #333;
+  padding: 30px 40px;
+  color: white;
+  text-align: center;
+  border-bottom: 2px solid #444;
+}
+
+.header h2 {
+  margin: 5px;
+  font-size: 24px;
+}
+
+.header:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+input {
+  margin: 0;
+  border: none;
+  border-radius: 5px;
+  width: 70%;
+  padding: 10px;
+  float: left;
+  font-size: 16px;
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+}
+
+.addBtn {
+  padding: 10px;
+  width: 25%;
+  background: #666;
+  color: white;
+  float: left;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 5px;
+  margin-left: 5px;
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+}
+
+.addBtn:hover {
+  background-color: #888;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+ul li {
+  animation: fadeIn 0.5s;
+}
+</style>
+</head>
+<body>
+
+<div id="myDIV" class="header">
+  <h2 style="margin:5px">My To Do List</h2>
+  <input type="text" id="myInput" placeholder="Title...">
+  <span onclick="newElement()" class="addBtn">Add</span>
+</div>
+
+<ul id="myList">
+  <li>Task 1</li>
+  <li>Task 2</li>
+  <li>Task 3</li>
+</ul>
+
+<script>
+let myNodelist = document.getElementsByTagName("LI");
+let i;
+for (i = 0; i < myNodelist.length; i++) {
+  let span = document.createElement("SPAN");
+  let txt = document.createTextNode("\u00D7");
+  span.className = "close";
+  span.appendChild(txt);
+  myNodelist[i].appendChild(span);
+}
+
+let close = document.getElementsByClassName("close");
+for (i = 0; i < close.length; i++) {
+  close[i].onclick = function() {
+    let div = this.parentElement;
+    div.style.display = "none";
+  }
+}
+
+let list = document.querySelector('ul');
+list.addEventListener('click', function(ev) {
+  if (ev.target.tagName === 'LI') {
+    ev.target.classList.toggle('checked');
+  }
+}, false);
+
+function newElement() {
+  let li = document.createElement("li");
+  let inputValue = document.getElementById("myInput").value;
+  let t = document.createTextNode(inputValue);
+  li.appendChild(t);
+  if (inputValue === '') {
+    alert("You must write something!");
+  } else {
+    document.getElementById("myUL").appendChild(li);
+  }
+  document.getElementById("myInput").value = "";
+
+  let span = document.createElement("SPAN");
+  let txt = document.createTextNode("\u00D7");
+  span.className = "close";
+  span.appendChild(txt);
+  li.appendChild(span);
+
+  for (i = 0; i < close.length; i++) {
+    close[i].onclick = function() {
+      let div = this.parentElement;
+      div.style.display = "none";
+    }
+  }
+}
+</script>
+
+</body>
+</html>
